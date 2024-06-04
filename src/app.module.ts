@@ -1,16 +1,15 @@
 import { Module } from '@nestjs/common';
 import { TodoModule } from './todo/todo.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
+import { ThrottlerGuard } from '@nestjs/throttler';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost/todoDB'),
     TodoModule,
-    AuthModule,
     UserModule,
   ],
   controllers: [],
@@ -18,6 +17,10 @@ import { AuthGuard } from './auth/auth.guard';
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
     },
   ],
 })
