@@ -16,11 +16,13 @@ import { CreateUserDto } from './dto/create.user.dto';
 import { UpdateUserDto } from './dto/update.user.dto';
 import { Public } from 'src/decorators/public.decorator';
 import { SignInDto } from 'src/user/dto/sign-in.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @ApiTags('Auth')
   @HttpCode(HttpStatus.OK)
   @Public()
   @Post('/login')
@@ -28,34 +30,41 @@ export class UserController {
     return this.userService.signIn(signInDto);
   }
 
+  @ApiTags('Auth')
   @Get('/profile')
   getProfile(@Request() req) {
     return req.user;
   }
 
+  @ApiTags('User')
   @Get()
   @ApiBearerAuth()
   findAll(): Promise<User[]> {
     return this.userService.findAll();
   }
 
+  @ApiTags('User')
   @Public()
   @Post()
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.userService.createUser(createUserDto);
   }
 
+  @ApiTags('User')
   @Public()
   @Get(':id')
   findOne(@Param('id') id: string): Promise<User> {
     return this.userService.findOne(id);
   }
 
+  @ApiTags('User')
   @Public()
   @Get('username')
   findUserByUserName(@Param('username') username: string): Promise<any> {
     return this.userService.findUserByUserName(username);
   }
+
+  @ApiTags('User')
   @Public()
   @Patch(':id')
   update(
@@ -65,6 +74,7 @@ export class UserController {
     return this.userService.update(id, updateUserDto);
   }
 
+  @ApiTags('User')
   @Public()
   @Delete(':id')
   remove(@Param('id') id: string) {
