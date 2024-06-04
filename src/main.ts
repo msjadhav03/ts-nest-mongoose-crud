@@ -5,8 +5,10 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
-    .setTitle('Todo example')
-    .setDescription('The todo API description')
+    .setTitle('Todo App')
+    .setDescription(
+      `This documentation content todo module, user module and login API's. It also encorporates authorization header`,
+    )
     .setVersion('1.0')
     .addTag('Todo')
     .addBearerAuth()
