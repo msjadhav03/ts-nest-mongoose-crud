@@ -24,7 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is a todo application using Nest.js. It has encorporated all the authentication code. Also it has user REST'API.
 
 ## Installation
 
